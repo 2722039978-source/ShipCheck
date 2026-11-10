@@ -1,0 +1,33 @@
+{
+  "from_version": "1.0",
+  "to_version": "2.0",
+  "platform": "windows-amd64",
+  "components": [
+    {
+      "name": "app",
+      "version": "2.0"
+    },
+    {
+      "name": "runtime",
+      "version": "3.1"
+    }
+  ],
+  "migrations": [
+    {
+      "id": "schema-1",
+      "from_version": "1.0",
+      "to_version": "1.5",
+      "files": [
+        "migrations/001.sql"
+      ]
+    },
+    {
+      "id": "schema-2",
+      "from_version": "1.5",
+      "to_version": "2.0",
+      "files": [
+        "migrations/002.sql"
+      ]
+    }
+  ]
+}

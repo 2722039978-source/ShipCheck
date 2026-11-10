@@ -1,0 +1,11 @@
+{
+  "order_id": "OFFLINE-001",
+  "from_version": "1.6",
+  "to_version": "1.7",
+  "platform": "windows-amd64",
+  "required_files": [
+    "app/Show-Version.ps1",
+    "dependencies/ReleaseConfig.psd1",
+    "migrations/1.6_to_1.7.sql"
+  ]
+}

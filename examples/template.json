@@ -1,0 +1,28 @@
+{
+  "name": "离线升级示例",
+  "version": "1",
+  "order": {
+    "order_id": "OFFLINE-TEMPLATE",
+    "from_version": "1.6",
+    "to_version": "1.7",
+    "platform": "windows-amd64",
+    "required_files": [
+      "app/Show-Version.ps1",
+      "dependencies/ReleaseConfig.psd1",
+      "migrations/1.6_to_1.7.sql"
+    ],
+    "files": [
+      { "path": "app/Show-Version.ps1", "allow_empty": false },
+      { "path": "dependencies/ReleaseConfig.psd1", "allow_empty": false },
+      { "path": "migrations/1.6_to_1.7.sql", "allow_empty": false }
+    ],
+    "allowed_directories": ["app", "dependencies", "migrations"],
+    "forbidden_patterns": ["*.tmp", "*.bak"],
+    "allow_extra_files": false
+  },
+  "output": "upgrade.zip",
+  "command": {
+    "tool": "tar.exe",
+    "args": ["-a", "-cf", "upgrade.zip", "release.json", "app", "dependencies", "migrations"]
+  }
+}

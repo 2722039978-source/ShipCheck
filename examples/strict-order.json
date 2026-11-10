@@ -1,0 +1,63 @@
+{
+  "order_id": "STRICT-20261109-001",
+  "from_version": "1.0",
+  "to_version": "2.0",
+  "platform": "windows-amd64",
+  "required_files": [
+    "payload/message.txt"
+  ],
+  "files": [
+    {
+      "path": "payload/message.txt",
+      "sha256": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+      "size": 5,
+      "allow_empty": false
+    }
+  ],
+  "allowed_directories": [
+    "payload",
+    "migrations"
+  ],
+  "forbidden_patterns": [
+    "payload/*.bak",
+    "payload/*.tmp"
+  ],
+  "allow_extra_files": false,
+  "components": [
+    {
+      "name": "app",
+      "version": "2.0",
+      "dependencies": [
+        {
+          "name": "runtime",
+          "allowed_versions": [
+            "3.0",
+            "3.1"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "runtime",
+      "version": "3.1"
+    }
+  ],
+  "migrations": [
+    {
+      "id": "schema-1",
+      "from_version": "1.0",
+      "to_version": "1.5",
+      "files": [
+        "migrations/001.sql"
+      ]
+    },
+    {
+      "id": "schema-2",
+      "from_version": "1.5",
+      "to_version": "2.0",
+      "files": [
+        "migrations/002.sql"
+      ]
+    }
+  ]
+}
