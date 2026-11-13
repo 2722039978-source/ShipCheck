@@ -14,28 +14,16 @@
 
 ## 构建与测试
 
-Windows x64 图形版使用 Go 1.24 或更新版本和 Walk 原生控件。将 Go 工具链解压到项目的 `.local\go` 后，在项目根目录用 PowerShell 执行：
+在 Windows x64 上使用 PowerShell 7。将 Windows amd64 版 Go 1.24 或更新版本解压到项目的 `.local\go`，确认 `.local\go\bin\go.exe` 存在，并在 `PATH` 中提供 `tar.exe` 和 `cmd.exe`。首次运行需要能够下载 Go 依赖。
+
+从项目根目录运行 `& .\build.ps1`，生成 `ShipCheck.exe` 和 `.local\shipcheck.exe`。图形版可作为单个 `ShipCheck.exe` 发布，所用打包工具及其依赖由本机提供。单独构建时可通过 `build.ps1 -Go PATH` 指定 Go 可执行文件。`test.ps1` 固定使用 `.local\go\bin\go.exe`。
 
 ```powershell
-& .\build.ps1
+& .\test.ps1              # Go 测试、GUI 命令测试、两种构建配置的 go vet
+& .\test.ps1 -Integration # 包含以上检查，再构建 CLI 和 GUI 并运行真实 ZIP 集成检查
 ```
 
-构建生成根目录的 `ShipCheck.exe` 和命令行程序 `.local\shipcheck.exe`。`build.ps1 -Go PATH` 可以指定 Go 可执行文件。依赖、构建缓存和构建临时文件位于 `.local`。图形版可以作为单个 `ShipCheck.exe` 发布，用户选择的打包工具及其运行依赖由本机提供。
-
-```powershell
-& .\test.ps1
-& .\test.ps1 -Integration
-```
-
-`test.ps1` 执行全部 Go 测试、GUI 模板命令测试及 CLI、GUI 两种构建标记的 `go vet`。`-Integration` 另外构建两个入口，并运行 `tests/accept-extended.ps1`，检查真实 ZIP、报告摘要、修正尝试、原证据内容、模板和历史查询。测试文件保存在 `.local`。已执行的验证记录见 [验证记录](docs/validation.md)。
-
-原生窗口检查单独执行，需要一个缺少迁移脚本的失败打包记录：
-
-```powershell
-& .\tests\gui-extended.ps1 -Evidence 'E:\path\to\failed-run'
-```
-
-此记录应使用示例 `1.6 → 1.7` 工单，`input/` 包含 `release.json`、`app`、`dependencies` 和 `migrations`，预期输出为 `upgrade.zip`。脚本操作实际 Windows 控件，检查工单保存、模板读取、修正尝试和历史查询，并将文件写入 `.local\gui-extended-*`。详细结构和验证方法见 [实现说明](docs/implementation.md)。
+构建缓存和测试输出写入 `.local`。在交互式 Windows 桌面上，可用公开示例生成失败记录，再传给 `tests/gui-extended.ps1 -Evidence`。复现命令、预期输出、人工窗口检查和 2026-11-09 历史摘要见 [验证记录](docs/validation.md)。实现细节见 [实现说明](docs/implementation.md)。
 
 ## 工单格式
 
